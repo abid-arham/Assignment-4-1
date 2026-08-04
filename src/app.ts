@@ -7,6 +7,8 @@ import { notFound } from "./middlewares/notFound";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 import { authRouter } from "./modules/auth/auth.routes";
 import { prisma } from "./lib/prisma";
+import { categoryRouter } from "./modules/categories/category.routes";
+import { technicianRouter } from "./modules/technicians/technician.routes";
 const app: Application = express();
 
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
@@ -20,6 +22,9 @@ app.get("/", async(req:Request, res:Response)=>{
 })
 
 app.use("/api/auth", authRouter)
+app.use("/api/categories", categoryRouter)
+app.use("/api/technicians", technicianRouter)
+
 
 
 

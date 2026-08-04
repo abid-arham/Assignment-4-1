@@ -1,5 +1,15 @@
 import { Router } from "express";
+import { technicianController } from "./technician.controller";
 
 const router = Router();
 
-export default router;
+
+
+
+
+router.get("/", technicianController.getAllTechnicians)
+
+
+
+
+export const technicianRouter = router;

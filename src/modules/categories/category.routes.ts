@@ -1,5 +1,9 @@
 import { Router } from "express";
+import { categoryController } from "./category.controller";
 
 const router = Router();
 
-export default router;
+
+router.get("/", categoryController.getAllCategories)
+
+export const categoryRouter = router;

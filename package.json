@@ -10,7 +10,8 @@
     "start": "node dist/src/server.js",
     "typecheck": "tsc --noEmit",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "tsx prisma/dataSeed.ts"
   },
   "engines": {
     "node": ">=20"
