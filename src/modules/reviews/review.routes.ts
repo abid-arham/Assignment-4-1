@@ -1,5 +1,11 @@
 import { Router } from "express";
+import { auth } from "../../middlewares/auth";
+import { Role } from "../../../generated/prisma/enums";
+import { reviewController } from "./review.controller";
 
 const router = Router();
 
-export default router;
+
+router.post("/", auth(Role.CUSTOMER), reviewController.createNewReview)
+
+export const reviewRouter = router;

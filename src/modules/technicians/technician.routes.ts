@@ -10,11 +10,11 @@ const router = Router();
 
 
 router.get("/", technicianController.getAllTechnicians)
+router.get("/bookings",auth(Role.TECHNICIAN), technicianController.getTechnicianBookings)
+router.patch("/bookings/:id",auth(Role.TECHNICIAN), technicianController.updateBookingStatus)
 router.get("/:id", technicianController.getTechnicianById)
 router.put("/profile", auth(Role.TECHNICIAN), technicianController.updateTechnicianProfile)
 router.put("/availability",auth(Role.TECHNICIAN), technicianController.updateTechnicianAvailability)
-router.get("/bookings",auth(Role.TECHNICIAN), technicianController.getTechnicianBookings)
-router.patch("/bookings/:id",auth(Role.TECHNICIAN), technicianController.updateBookingStatus)
 
 
 

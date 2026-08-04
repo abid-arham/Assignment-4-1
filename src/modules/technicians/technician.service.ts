@@ -22,15 +22,6 @@ const getTechnicianById = async(technicianId: string)=>{
 
 
 const updateTechnicianProfile  = async(technicianId: string, payload: IUpdateTechnicianProfile)=>{
-
-    
-
-    const isTechnicianExist = await prisma.technicianProfile.findUnique({
-        where:{
-            id: technicianId
-        }
-    })
-    
     const{skills,experience,hourlyRate,location} = payload
 
     const updatedTechnicianProfile = await prisma.technicianProfile.update({
@@ -61,7 +52,7 @@ const updateTechnicianAvailability = async(technicianId: string, payload: IUpdat
             id: technicianId
         },
         data:{
-            ...payload
+            availability: {...payload}
         }
     })
 
@@ -69,10 +60,10 @@ const updateTechnicianAvailability = async(technicianId: string, payload: IUpdat
 }
 
 const getTechnicianBookings = async(technicianId: string)=>{
-
+    
     const bookings = await prisma.booking.findMany({
         where: {
-            id: technicianId
+            technicianId: technicianId
         }
     })
 
@@ -81,17 +72,17 @@ const getTechnicianBookings = async(technicianId: string)=>{
 }
 
 const updateBookingStatus = async(bookingId: string, newStatus: BookingStatus)=>{
-    const isBookingExist = await prisma.booking.findUnique({
-        where:{
-            id: bookingId
-        }
-    })
+    // const isBookingExist = await prisma.booking.findUnique({
+    //     where:{
+    //         id: bookingId
+    //     }
+    // })
 
-    if(!isBookingExist){
-        throw new Error("Booking does not exist")
-    }
+    // if(!isBookingExist){
+    //     throw new Error("Booking does not exist")
+    // }
 
-    const updatedStatus = await prisma.booking.update({
+    return await prisma.booking.update({
 
         where:{
             id:bookingId
@@ -103,7 +94,7 @@ const updateBookingStatus = async(bookingId: string, newStatus: BookingStatus)=>
     
     })
 
-    return updatedStatus
+    
 
 }
 

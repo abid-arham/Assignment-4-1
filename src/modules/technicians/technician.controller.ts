@@ -31,7 +31,7 @@ const getTechnicianById = catchAsync(async(req:Request, res: Response, next: Nex
 
 const updateTechnicianProfile = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
     const payload = req.body
-    const technicianId = req.user?.id
+    const technicianId = req.user?.technicianId
     const result = await technicianService.updateTechnicianProfile(technicianId as string, payload);
     sendResponse(res, {
         success: true,
@@ -42,7 +42,7 @@ const updateTechnicianProfile = catchAsync(async(req: Request, res: Response, ne
 })
 const updateTechnicianAvailability = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
     const payload = req.body
-    const technicianId = req.user?.id
+    const technicianId = req.user?.technicianId
     const result = await technicianService.updateTechnicianAvailability(technicianId as string, payload)
     sendResponse(res, {
         success: true,
@@ -53,7 +53,7 @@ const updateTechnicianAvailability = catchAsync(async(req: Request, res: Respons
 
 })
 const getTechnicianBookings = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
-    const technicianId = req.user?.id
+    const technicianId = req.user?.technicianId
     const result = await technicianService.getTechnicianBookings(technicianId as string)
     sendResponse(res, {
         success: true,
@@ -65,9 +65,9 @@ const getTechnicianBookings = catchAsync(async(req: Request, res: Response, next
 const updateBookingStatus = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
     const bookingId = req.params.id
 
-    const newStatus = req.body
+    const {status} = req.body
 
-    const result = await technicianService.updateBookingStatus(bookingId as string, newStatus)
+    const result = await technicianService.updateBookingStatus(bookingId as string, status)
     sendResponse(res, {
         success: true,
         statusCode:httpStatus.OK,

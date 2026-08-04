@@ -15,7 +15,8 @@ declare global{
                 id: string;
                 name: string;
                 email: string;
-                role: Role; 
+                role: Role;
+                technicianId?: string;
             }
         }
     }
@@ -41,7 +42,8 @@ export const auth = (...requiredRoles: Role[]) =>{
     const user = await prisma.user.findUnique({
         where:{
             id, email, name, role
-        }
+        },
+        include: { technicianProfile: role === Role.TECHNICIAN }
     });
 
 
@@ -49,7 +51,7 @@ export const auth = (...requiredRoles: Role[]) =>{
         throw new Error("Forbidden. You don't have permission here")
     }
 
-  
+
 
     if(!user){
         throw new Error("User not found. Please login again")
@@ -59,12 +61,13 @@ export const auth = (...requiredRoles: Role[]) =>{
         throw new Error("Your account has been blocked. Please contact support.")
     }
 
- 
+
 
 
 
     req.user = {
-        email, name, id, role
+        email, name, id, role,
+        technicianId: user.technicianProfile?.id
     }
 
     next();
