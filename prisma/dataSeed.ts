@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import {
   ActiveStatus,
   BookingStatus,
-  PaymentProvider,
   PaymentStatus,
   Role,
 } from "../generated/prisma/enums";
@@ -46,18 +45,18 @@ async function main() {
   const password = await bcrypt.hash(TEST_PASSWORD, 12);
 
   const admin = await prisma.user.upsert({
-    where: { email: "admin@fixitnow.test" },
+    where: { email: "admin@fixitnow.com" },
     update: {
-      name: "Test Admin",
-      password,
+      name: "Admin User",
+      password: await bcrypt.hash("admin123", 12),
       role: Role.ADMIN,
       activeStatus: ActiveStatus.ACTIVE,
     },
     create: {
       id: SEED_IDS.userAdmin,
-      name: "Test Admin",
-      email: "admin@fixitnow.test",
-      password,
+      name: "Admin User",
+      email: "admin@fixitnow.com",
+      password: await bcrypt.hash("admin123", 12),
       role: Role.ADMIN,
     },
   });
@@ -319,7 +318,6 @@ async function main() {
       bookingId: completedBooking.id,
       customerId: customer.id,
       amount: "60.00",
-      provider: PaymentProvider.STRIPE,
       status: PaymentStatus.COMPLETED,
       paidAt: new Date("2026-07-20T12:00:00.000Z"),
       metadata: { test: true, paymentIntentId: "pi_seed_completed_001" },
@@ -330,7 +328,6 @@ async function main() {
       bookingId: completedBooking.id,
       customerId: customer.id,
       amount: "60.00",
-      provider: PaymentProvider.STRIPE,
       status: PaymentStatus.COMPLETED,
       paidAt: new Date("2026-07-20T12:00:00.000Z"),
       metadata: { test: true, paymentIntentId: "pi_seed_completed_001" },
@@ -340,22 +337,20 @@ async function main() {
   await prisma.payment.upsert({
     where: { id: SEED_IDS.paymentPending },
     update: {
-      transactionId: "seed-ssl-pending-001",
+      transactionId: "seed-stripe-pending-001",
       bookingId: acceptedBooking.id,
       customerId: customer.id,
       amount: "75.00",
-      provider: PaymentProvider.SSLCOMMERZ,
       status: PaymentStatus.PENDING,
       paidAt: null,
       metadata: { test: true, sessionKey: "seed_pending_001" },
     },
     create: {
       id: SEED_IDS.paymentPending,
-      transactionId: "seed-ssl-pending-001",
+      transactionId: "seed-stripe-pending-001",
       bookingId: acceptedBooking.id,
       customerId: customer.id,
       amount: "75.00",
-      provider: PaymentProvider.SSLCOMMERZ,
       status: PaymentStatus.PENDING,
       metadata: { test: true, sessionKey: "seed_pending_001" },
     },
