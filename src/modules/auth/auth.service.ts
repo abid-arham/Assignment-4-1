@@ -1,1 +1,99 @@
-export {};
+import { tr } from "zod/v4/locales";
+import config from "../../config";
+import { prisma } from "../../lib/prisma"
+import bcrypt from "bcryptjs";
+import { ICreateUser, ILoginUser } from "./auth.interface";
+import { jwtUtils } from "../../utils/jwt";
+import { SignOptions } from "jsonwebtoken";
+
+
+
+const registerUser = async(payload: ICreateUser)=>{
+    const {name, email, password, role} = payload
+    const isUserExist = await prisma.user.findUnique({
+        where:{
+            email
+        }
+    })
+
+    if(isUserExist){
+        throw new Error("User with this email already exists")
+    }
+    const hashPassword = await bcrypt.hash(String(password), Number(config.bcrypt_salt_rounds))
+    const createdUser = await prisma.user.create({
+        data:{
+            name,
+            email,
+            password: hashPassword,
+            role
+        },
+        omit:{
+            password: true
+        }
+    })
+
+    return createdUser
+}
+
+const loginUser = async(payload: ILoginUser)=>{
+    const {email, password} = payload;
+    if(!email || password === undefined || password === null){
+        throw new Error("Email and password are required")
+    }
+
+    const user = await prisma.user.findUniqueOrThrow({
+        where:{
+            email
+        }
+    })
+
+    const isPasswordMatched = await bcrypt.compare(String(password), user.password);
+
+    if(!isPasswordMatched){
+        throw new Error("Incorrect email or password")
+    }
+
+    const {password: _password, ...userWithoutPassword} = user;
+
+    const jwtPayload = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+    }
+
+    const accessToken = jwtUtils.createToken(jwtPayload,
+    config.jwt_access_secret, 
+    {expiresIn:config.jwt_access_expires_in} as SignOptions)
+
+    const refreshToken = jwtUtils.createToken(jwtPayload,
+    config.jwt_refresh_secret, 
+    {expiresIn:config.jwt_refresh_expires_in} as SignOptions)
+
+    return {accessToken, refreshToken};
+}
+
+
+const getUserInfo = async(userId: string)=>{
+    
+    const user = await prisma.user.findUniqueOrThrow({
+        where:{
+            id: userId
+        },
+        omit:{
+            password: true
+        }
+    })
+
+    return user
+
+
+}
+
+
+
+
+
+export const authServices = {
+    registerUser, loginUser, getUserInfo
+}

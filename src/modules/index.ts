@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import adminRouter from "./admin/admin.routes";
-import authRouter from "./auth/auth.routes";
+import { authRouter } from "./auth/auth.routes";
 import bookingRouter from "./bookings/booking.routes";
 import categoryRouter from "./categories/category.routes";
 import paymentRouter from "./payments/payment.routes";
