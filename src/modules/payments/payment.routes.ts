@@ -1,5 +1,11 @@
-import { Router } from "express";
+import { Router } from "express"
+import { auth } from "../../middlewares/auth"
+import { paymentController } from "./payment.controller"
 
-const router = Router();
+const router = Router()
 
-export default router;
+router.post("/create", auth("CUSTOMER"), paymentController.createCheckoutSession)
+router.post("/confirm", paymentController.handleWebhook)
+router.get("/", auth("CUSTOMER"), paymentController.getPaymentHistory)
+
+export const paymentRouter = router

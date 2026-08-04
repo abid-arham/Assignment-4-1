@@ -1,23 +1,23 @@
 model TechnicianProfile {
-    id           String @id @default(uuid())
-    userId       String @unique
-    user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-    bio          String?
-    skills       String[]
-    experience   Int
-    hourlyRate   Decimal @db.Decimal(10, 2)
-    location     String?
-    availability Json?
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio          String?
+  skills       String[]
+  experience   Int
+  hourlyRate   Decimal  @db.Decimal(10, 2)
+  location     String?
+  availability Json?
 
-    averageRating Decimal @default(0) @db.Decimal(3, 2)
-    reviewCount   Int     @default(0)
-    services      Service[]
-    bookings      Booking[]
-    reviews       Review[]
+  averageRating Decimal   @default(0) @db.Decimal(3, 2)
+  reviewCount   Int       @default(0)
+  services      Service[]
+  bookings      Booking[]
+  reviews       Review[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    @@index([location])
-    @@map("technician_profiles")
+  @@index([location])
+  @@map("technician_profiles")
 }
