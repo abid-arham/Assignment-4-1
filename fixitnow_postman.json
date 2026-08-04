@@ -1,0 +1,325 @@
+{
+  "info": {
+    "name": "FixItNow API",
+    "description": "Home service marketplace API with customer, technician, and admin roles",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Customer",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"John Doe\",\"email\":\"john@example.com\",\"password\":\"pass123\",\"role\":\"CUSTOMER\",\"phone\":\"01712345678\"}"
+            },
+            "url": {"raw": "{{base_url}}/api/auth/register"}
+          }
+        },
+        {
+          "name": "Register Technician",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Jane Smith\",\"email\":\"jane@example.com\",\"password\":\"pass123\",\"role\":\"TECHNICIAN\"}"
+            },
+            "url": {"raw": "{{base_url}}/api/auth/register"}
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"admin@fixitnow.com\",\"password\":\"admin123\"}"
+            },
+            "url": {"raw": "{{base_url}}/api/auth/login"}
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/api/auth/me"}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Services (Public)",
+      "item": [
+        {
+          "name": "Get All Services",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{base_url}}/api/services"}
+          }
+        },
+        {
+          "name": "Get Service by ID",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{base_url}}/api/services/:id"}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Technicians (Public)",
+      "item": [
+        {
+          "name": "Get All Technicians",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{base_url}}/api/technicians"}
+          }
+        },
+        {
+          "name": "Get Technician Profile",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{base_url}}/api/technicians/:id"}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories (Public)",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{base_url}}/api/categories"}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bookings (Customer)",
+      "item": [
+        {
+          "name": "Create Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"serviceId\":\"6edc8e98-6938-4fc2-bf24-3327d2c85109\",\"technicianId\":\"8c799db3-f6d4-48c2-a0ab-18b3f3922178\",\"scheduledAt\":\"2026-09-15T10:00:00Z\"}"
+            },
+            "url": {"raw": "{{base_url}}/api/bookings"}
+          }
+        },
+        {
+          "name": "Get My Bookings",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/api/bookings"}
+          }
+        },
+        {
+          "name": "Get Booking Details",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/api/bookings/:id"}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"bookingId\":\"28d33c14-b3df-4fb4-9b9f-5747d8c0ca3c\"}"
+            },
+            "url": {"raw": "{{base_url}}/api/payments/create"}
+          }
+        },
+        {
+          "name": "Get Payment History",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/api/payments"}
+          }
+        },
+        {
+          "name": "Stripe Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "stripe-signature", "value": "whsec_test"}
+            ],
+            "body": {"mode": "raw", "raw": "{}"},
+            "url": {"raw": "{{base_url}}/api/payments/webhook"}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Technician",
+      "item": [
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"bio\":\"Expert plumber\",\"skills\":[\"Leak repair\"],\"experience\":5,\"hourlyRate\":\"30.00\",\"location\":\"Dhaka\"}"
+            },
+            "url": {"raw": "{{base_url}}/api/technician/profile"}
+          }
+        },
+        {
+          "name": "Update Availability",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"availability\":{\"days\":[\"Sunday\",\"Monday\"],\"hours\":\"09:00-17:00\"}}"
+            },
+            "url": {"raw": "{{base_url}}/api/technician/availability"}
+          }
+        },
+        {
+          "name": "Get Technician Bookings",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/api/technician/bookings"}
+          }
+        },
+        {
+          "name": "Update Booking Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\":\"ACCEPTED\"}"
+            },
+            "url": {"raw": "{{base_url}}/api/technician/bookings/:id"}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"bookingId\":\"478de2ac-9a71-4676-bac0-e34b6948238e\",\"technicianId\":\"8c799db3-f6d4-48c2-a0ab-18b3f3922178\",\"rating\":5,\"comment\":\"Great work!\"}"
+            },
+            "url": {"raw": "{{base_url}}/api/reviews"}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/api/admin/users"}
+          }
+        },
+        {
+          "name": "Update User Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"activeStatus\":\"BANNED\"}"
+            },
+            "url": {"raw": "{{base_url}}/api/admin/users/:id"}
+          }
+        },
+        {
+          "name": "Get All Bookings",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/api/admin/bookings"}
+          }
+        },
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/api/admin/categories"}
+          }
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Painting\",\"description\":\"Interior and exterior painting services\"}"
+            },
+            "url": {"raw": "{{base_url}}/api/admin/categories"}
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {"key": "base_url", "value": "http://localhost:8080"},
+    {"key": "token", "value": "your_jwt_token_here"}
+  ]
+}
