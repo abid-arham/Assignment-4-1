@@ -1,19 +1,39 @@
 # FixItNow API
 
-Starter structure for the FixItNow home-services marketplace backend. Application features and database models are intentionally not implemented.
+Backend API for FixItNow home services marketplace. Customers book technicians, technicians manage jobs, admins oversee the platform.
 
-## Quick start
+## Setup
 
-1. Install packages: `npm install`
-2. Copy `.env.example` to `.env` and fill in the values.
-3. Define your Prisma models in `prisma/schema.prisma`.
-4. Generate the client: `npm run prisma:generate`
-5. Start development: `npm run dev`
+```bash
+npm install
+cp .env.example .env  # Configure DATABASE_URL, STRIPE keys
+npx prisma generate
+npx prisma migrate deploy
+npm run seed
+npm run dev
+```
 
-## Layout
+## Tech Stack
 
-- `src/modules` — feature modules, each keeping its own routes, controller, service, and validation files
-- `src/shared` — cross-module middleware, configuration, types, and utilities
-- `prisma` — PostgreSQL/Prisma setup
+- Node.js + Express + TypeScript
+- PostgreSQL + Prisma ORM
+- Stripe payment integration
+- JWT authentication
 
-Each module is already mounted under `/api` in `src/modules/index.ts`.
+## API Documentation
+
+Import `fixitnow_postman.json` into Postman for full endpoint documentation.
+
+## Admin Credentials
+
+**Email:** admin@fixitnow.com  
+**Password:** admin123
+
+## Assignment Requirements
+
+✅ Structured error responses: `{ success, message, errorDetails }`  
+✅ Input validation with Zod on all endpoints  
+✅ Stripe payment integration  
+✅ Admin credentials provided  
+✅ Postman collection included  
+✅ 20+ meaningful commits
