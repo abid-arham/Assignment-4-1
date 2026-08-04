@@ -6,6 +6,5 @@ generated/
 !.env.example
 coverage/
 *.log
-.agents
-.codex
+
 .vercel
