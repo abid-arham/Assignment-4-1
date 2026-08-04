@@ -3,31 +3,31 @@ import httpStatus from "http-status"
 import { Prisma } from "../../generated/prisma/client"
 import { ZodError } from "zod"
 
-export const globalErrorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-    let statusCode = httpStatus.INTERNAL_SERVER_ERROR
+export const globalErrorHandler = (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+    let statusCode: number = 500
     let message = err.message || "Internal Server Error"
     let errorDetails: any = undefined
 
     if (err instanceof ZodError) {
-        statusCode = httpStatus.BAD_REQUEST
+        statusCode = 400
         message = "Validation failed"
         errorDetails = err.errors
     } else if (err instanceof Prisma.PrismaClientValidationError) {
-        statusCode = httpStatus.BAD_REQUEST
+        statusCode = 400
         message = "Invalid field type or missing fields"
     } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === "P2002") {
-            statusCode = httpStatus.BAD_REQUEST
+            statusCode = 400
             message = "Duplicate entry"
         } else if (err.code === "P2003") {
-            statusCode = httpStatus.BAD_REQUEST
+            statusCode = 400
             message = "Foreign key constraint failed"
         } else if (err.code === "P2025") {
-            statusCode = httpStatus.NOT_FOUND
+            statusCode = 404
             message = "Record not found"
         }
     } else if (err instanceof Prisma.PrismaClientInitializationError && err.errorCode === "P1000") {
-        statusCode = httpStatus.UNAUTHORIZED
+        statusCode = 401
         message = "Database authentication failed"
     }
 
