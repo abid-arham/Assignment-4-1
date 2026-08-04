@@ -13,6 +13,19 @@ const getAllTechnicians = catchAsync(async(req:Request, res: Response, next: Nex
     })
 })
 
+
+const getTechnicianById = catchAsync(async(req:Request, res: Response, next: NextFunction)=>{
+    const technicianId = req.params.id
+    const result = await technicianService.getTechnicianById(technicianId as string)
+    sendResponse(res, {
+        success: true,
+        statusCode:httpStatus.OK,
+        message:"Technician retrieved successfully",
+        data: result
+    })
+
+})
+
 export const technicianController =  {
-    getAllTechnicians
+    getAllTechnicians, getTechnicianById
 };

@@ -1,5 +1,8 @@
 import { Router } from "express";
+import { serviceController } from "./service.controller";
 
 const router = Router();
 
-export default router;
+router.get("/", serviceController.getAllServices)
+
+export const serviceRouter = router;

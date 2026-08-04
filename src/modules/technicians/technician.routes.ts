@@ -8,6 +8,7 @@ const router = Router();
 
 
 router.get("/", technicianController.getAllTechnicians)
+router.get("/:id", technicianController.getTechnicianById)
 
 
 

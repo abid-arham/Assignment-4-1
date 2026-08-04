@@ -9,6 +9,8 @@ import { authRouter } from "./modules/auth/auth.routes";
 import { prisma } from "./lib/prisma";
 import { categoryRouter } from "./modules/categories/category.routes";
 import { technicianRouter } from "./modules/technicians/technician.routes";
+import { serviceRouter } from "./modules/services/service.routes";
+import { bookingRouter } from "./modules/bookings/booking.routes";
 const app: Application = express();
 
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
@@ -24,6 +26,8 @@ app.get("/", async(req:Request, res:Response)=>{
 app.use("/api/auth", authRouter)
 app.use("/api/categories", categoryRouter)
 app.use("/api/technicians", technicianRouter)
+app.use("/api/services", serviceRouter)
+app.use("/api/bookings", bookingRouter)
 
 
 
