@@ -6,5 +6,4 @@ generated/
 !.env.example
 coverage/
 *.log
-
 .vercel
