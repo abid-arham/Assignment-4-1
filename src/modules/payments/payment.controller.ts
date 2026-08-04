@@ -20,7 +20,7 @@ const getPaymentHistory = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getPaymentById = catchAsync(async (req: Request, res: Response) => {
-  const result = await paymentServices.getPaymentById(req.user!.id, req.params.id)
+  const result = await paymentServices.getPaymentById(req.user!.id, req.params.id as string)
   sendResponse(res, { success: true, statusCode: 200, message: "Payment details", data: result })
 })
 
