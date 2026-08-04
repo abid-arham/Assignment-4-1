@@ -2,13 +2,16 @@ import { Router } from "express";
 import { auth } from "../../middlewares/auth";
 import { Role } from "../../../generated/prisma/enums";
 import { adminController } from "./admin.controller";
+import { validate } from "../../middlewares/validate";
+import { adminValidation } from "./admin.validation";
+import { categoryValidation } from "../categories/category.validation";
 
 const router = Router();
 
 router.get("/users", auth(Role.ADMIN), adminController.getAllUsers)
-router.patch("/users/:id", auth(Role.ADMIN), adminController.updateUserStatus)
+router.patch("/users/:id", auth(Role.ADMIN), validate(adminValidation.updateUserStatus), adminController.updateUserStatus)
 router.get("/bookings", auth(Role.ADMIN), adminController.getAllBookings)
 router.get("/categories", auth(Role.ADMIN), adminController.getAllCategories)
-router.post("/categories", auth(Role.ADMIN), adminController.addNewCategory)
+router.post("/categories", auth(Role.ADMIN), validate(categoryValidation.create), adminController.addNewCategory)
 
-export default router;
+export const adminRouter = router;

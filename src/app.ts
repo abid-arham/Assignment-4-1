@@ -13,6 +13,7 @@ import { serviceRouter } from "./modules/services/service.routes";
 import { bookingRouter } from "./modules/bookings/booking.routes";
 import { reviewRouter } from "./modules/reviews/review.routes";
 import { paymentRouter } from "./modules/payments/payment.routes";
+import { adminRouter } from "./modules/admin/admin.routes";
 
 const app: Application = express();
 
@@ -33,6 +34,7 @@ app.use("/api/services", serviceRouter)
 app.use("/api/bookings", bookingRouter)
 app.use("/api/reviews", reviewRouter)
 app.use("/api/payments", paymentRouter)
+app.use("/api/admin", adminRouter)
 
 
 

@@ -33,7 +33,7 @@ npm run dev
 
 ## Admin Credentials
 
-**Email:** admin@fixitnow.com  
+**Email:** admin@fixitnow.test
 **Password:** admin123
 
 Use these credentials to login via POST `/api/auth/login`
