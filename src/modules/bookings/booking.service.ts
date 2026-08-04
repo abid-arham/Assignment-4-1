@@ -20,12 +20,13 @@ const createBooking = async(payload: ICreateBooking)=>{
 
 }
 const getAllBookings = async(customerId: string)=>{
-
+    
     const allBookings = await prisma.booking.findMany({
         where:{
             customerId
         }
     })
+    
     return allBookings
 
 }
