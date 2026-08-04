@@ -84,4 +84,11 @@ const getPaymentHistory = async (userId: string) => {
   })
 }
 
-export const paymentServices = { createCheckoutSession, handleWebhook, getPaymentHistory }
+const getPaymentById = async (userId: string, paymentId: string) => {
+  return prisma.payment.findFirstOrThrow({
+    where: { id: paymentId, booking: { customerId: userId } },
+    include: { booking: { include: { service: true } } }
+  })
+}
+
+export const paymentServices = { createCheckoutSession, handleWebhook, getPaymentHistory, getPaymentById }

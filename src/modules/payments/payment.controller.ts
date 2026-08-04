@@ -19,4 +19,9 @@ const getPaymentHistory = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, { success: true, statusCode: 200, message: "Payment history", data: result })
 })
 
-export const paymentController = { createCheckoutSession, handleWebhook, getPaymentHistory }
+const getPaymentById = catchAsync(async (req: Request, res: Response) => {
+  const result = await paymentServices.getPaymentById(req.user!.id, req.params.id)
+  sendResponse(res, { success: true, statusCode: 200, message: "Payment details", data: result })
+})
+
+export const paymentController = { createCheckoutSession, handleWebhook, getPaymentHistory, getPaymentById }
