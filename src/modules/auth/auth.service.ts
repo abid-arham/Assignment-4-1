@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { ICreateUser, ILoginUser } from "./auth.interface";
 import { jwtUtils } from "../../utils/jwt";
 import { SignOptions } from "jsonwebtoken";
+import { create } from "domain";
 
 
 
@@ -19,6 +20,7 @@ const registerUser = async(payload: ICreateUser)=>{
     if(isUserExist){
         throw new Error("User with this email already exists")
     }
+
     const hashPassword = await bcrypt.hash(String(password), Number(config.bcrypt_salt_rounds))
     const createdUser = await prisma.user.create({
         data:{
@@ -32,7 +34,17 @@ const registerUser = async(payload: ICreateUser)=>{
         }
     })
 
+    if(role === "TECHNICIAN"){
+        await prisma.technicianProfile.create({
+            data: {
+                userId: createdUser.id,
+                experience: 0,
+                hourlyRate: 0
+            }
+        })
+    }
     return createdUser
+    
 }
 
 const loginUser = async(payload: ILoginUser)=>{

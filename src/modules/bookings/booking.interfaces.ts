@@ -7,3 +7,5 @@ export interface ICreateBooking {
     totalAmount: number;
     notes?: string;
 }
+
+
