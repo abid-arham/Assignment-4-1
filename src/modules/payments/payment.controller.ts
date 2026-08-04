@@ -5,6 +5,7 @@ import { sendResponse } from "../../utils/sendResponse"
 
 const createCheckoutSession = catchAsync(async (req: Request, res: Response) => {
   const { bookingId } = req.body
+  if (!bookingId) throw new Error("bookingId required")
   const result = await paymentServices.createCheckoutSession(req.user!.id, bookingId)
   sendResponse(res, { success: true, statusCode: 200, message: "Checkout created", data: result })
 })

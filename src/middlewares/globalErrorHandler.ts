@@ -14,7 +14,7 @@ export const globalErrorHandler = (err: Error, _req: Request, res: Response, _ne
         errorDetails = err.errors
     } else if (err instanceof Prisma.PrismaClientValidationError) {
         statusCode = 400
-        message = "Invalid field type or missing fields"
+        message = err.message // ponytail: show actual validation error for debugging
     } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === "P2002") {
             statusCode = 400

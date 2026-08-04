@@ -5,12 +5,13 @@ import Stripe from "stripe"
 
 const createCheckoutSession = async (userId: string, bookingId: string) => {
   const booking = await prisma.booking.findUniqueOrThrow({
-    where: { id: bookingId, customerId: userId },
+    where: { id: bookingId },
     include: { service: true }
   })
-  
+
+  if (booking.customerId !== userId) throw new Error("Not your booking")
   if (booking.status !== "ACCEPTED") throw new Error("Booking not accepted")
-  
+
   const existing = await prisma.payment.findFirst({ where: { bookingId } })
   if (existing?.status === "COMPLETED") throw new Error("Already paid")
 
@@ -32,19 +33,20 @@ const createCheckoutSession = async (userId: string, bookingId: string) => {
   if (existing) {
     await prisma.payment.update({
       where: { id: existing.id },
-      data: { metadata: { stripeSessionId: session.id } }
+      data: { metadata: { stripeSessionId: session.id }, status: "PENDING" }
     })
   } else {
     await prisma.payment.create({
       data: {
         bookingId,
-        customerId: userId,
+        customerId: booking.customerId,
         amount: booking.service.price,
+        provider: "STRIPE",
         metadata: { stripeSessionId: session.id }
       }
     })
   }
-  
+
   return { paymentUrl: session.url }
 }
 

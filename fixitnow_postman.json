@@ -1,325 +1,491 @@
 {
-  "info": {
-    "name": "FixItNow API",
-    "description": "Home service marketplace API with customer, technician, and admin roles",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Auth",
-      "item": [
-        {
-          "name": "Register Customer",
-          "request": {
-            "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"name\":\"John Doe\",\"email\":\"john@example.com\",\"password\":\"pass123\",\"role\":\"CUSTOMER\",\"phone\":\"01712345678\"}"
-            },
-            "url": {"raw": "{{base_url}}/api/auth/register"}
-          }
-        },
-        {
-          "name": "Register Technician",
-          "request": {
-            "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"name\":\"Jane Smith\",\"email\":\"jane@example.com\",\"password\":\"pass123\",\"role\":\"TECHNICIAN\"}"
-            },
-            "url": {"raw": "{{base_url}}/api/auth/register"}
-          }
-        },
-        {
-          "name": "Login",
-          "request": {
-            "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"email\":\"admin@fixitnow.com\",\"password\":\"admin123\"}"
-            },
-            "url": {"raw": "{{base_url}}/api/auth/login"}
-          }
-        },
-        {
-          "name": "Get Current User",
-          "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
-            "url": {"raw": "{{base_url}}/api/auth/me"}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Services (Public)",
-      "item": [
-        {
-          "name": "Get All Services",
-          "request": {
-            "method": "GET",
-            "url": {"raw": "{{base_url}}/api/services"}
-          }
-        },
-        {
-          "name": "Get Service by ID",
-          "request": {
-            "method": "GET",
-            "url": {"raw": "{{base_url}}/api/services/:id"}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Technicians (Public)",
-      "item": [
-        {
-          "name": "Get All Technicians",
-          "request": {
-            "method": "GET",
-            "url": {"raw": "{{base_url}}/api/technicians"}
-          }
-        },
-        {
-          "name": "Get Technician Profile",
-          "request": {
-            "method": "GET",
-            "url": {"raw": "{{base_url}}/api/technicians/:id"}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Categories (Public)",
-      "item": [
-        {
-          "name": "Get All Categories",
-          "request": {
-            "method": "GET",
-            "url": {"raw": "{{base_url}}/api/categories"}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Bookings (Customer)",
-      "item": [
-        {
-          "name": "Create Booking",
-          "request": {
-            "method": "POST",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{token}}"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"serviceId\":\"6edc8e98-6938-4fc2-bf24-3327d2c85109\",\"technicianId\":\"8c799db3-f6d4-48c2-a0ab-18b3f3922178\",\"scheduledAt\":\"2026-09-15T10:00:00Z\"}"
-            },
-            "url": {"raw": "{{base_url}}/api/bookings"}
-          }
-        },
-        {
-          "name": "Get My Bookings",
-          "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
-            "url": {"raw": "{{base_url}}/api/bookings"}
-          }
-        },
-        {
-          "name": "Get Booking Details",
-          "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
-            "url": {"raw": "{{base_url}}/api/bookings/:id"}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Payments",
-      "item": [
-        {
-          "name": "Create Payment",
-          "request": {
-            "method": "POST",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{token}}"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"bookingId\":\"28d33c14-b3df-4fb4-9b9f-5747d8c0ca3c\"}"
-            },
-            "url": {"raw": "{{base_url}}/api/payments/create"}
-          }
-        },
-        {
-          "name": "Get Payment History",
-          "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
-            "url": {"raw": "{{base_url}}/api/payments"}
-          }
-        },
-        {
-          "name": "Stripe Webhook",
-          "request": {
-            "method": "POST",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "stripe-signature", "value": "whsec_test"}
-            ],
-            "body": {"mode": "raw", "raw": "{}"},
-            "url": {"raw": "{{base_url}}/api/payments/webhook"}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Technician",
-      "item": [
-        {
-          "name": "Update Profile",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{token}}"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"bio\":\"Expert plumber\",\"skills\":[\"Leak repair\"],\"experience\":5,\"hourlyRate\":\"30.00\",\"location\":\"Dhaka\"}"
-            },
-            "url": {"raw": "{{base_url}}/api/technician/profile"}
-          }
-        },
-        {
-          "name": "Update Availability",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{token}}"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"availability\":{\"days\":[\"Sunday\",\"Monday\"],\"hours\":\"09:00-17:00\"}}"
-            },
-            "url": {"raw": "{{base_url}}/api/technician/availability"}
-          }
-        },
-        {
-          "name": "Get Technician Bookings",
-          "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
-            "url": {"raw": "{{base_url}}/api/technician/bookings"}
-          }
-        },
-        {
-          "name": "Update Booking Status",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{token}}"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"status\":\"ACCEPTED\"}"
-            },
-            "url": {"raw": "{{base_url}}/api/technician/bookings/:id"}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Reviews",
-      "item": [
-        {
-          "name": "Create Review",
-          "request": {
-            "method": "POST",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{token}}"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"bookingId\":\"478de2ac-9a71-4676-bac0-e34b6948238e\",\"technicianId\":\"8c799db3-f6d4-48c2-a0ab-18b3f3922178\",\"rating\":5,\"comment\":\"Great work!\"}"
-            },
-            "url": {"raw": "{{base_url}}/api/reviews"}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Admin",
-      "item": [
-        {
-          "name": "Get All Users",
-          "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
-            "url": {"raw": "{{base_url}}/api/admin/users"}
-          }
-        },
-        {
-          "name": "Update User Status",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{token}}"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"activeStatus\":\"BANNED\"}"
-            },
-            "url": {"raw": "{{base_url}}/api/admin/users/:id"}
-          }
-        },
-        {
-          "name": "Get All Bookings",
-          "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
-            "url": {"raw": "{{base_url}}/api/admin/bookings"}
-          }
-        },
-        {
-          "name": "Get All Categories",
-          "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
-            "url": {"raw": "{{base_url}}/api/admin/categories"}
-          }
-        },
-        {
-          "name": "Create Category",
-          "request": {
-            "method": "POST",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{token}}"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"name\":\"Painting\",\"description\":\"Interior and exterior painting services\"}"
-            },
-            "url": {"raw": "{{base_url}}/api/admin/categories"}
-          }
-        }
-      ]
-    }
-  ],
-  "variable": [
-    {"key": "base_url", "value": "http://localhost:8080"},
-    {"key": "token", "value": "your_jwt_token_here"}
-  ]
+	"info": {
+		"_postman_id": "8f6d1e61-15ac-4f62-99d7-e02dd676ecbe",
+		"name": "Assignment4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "54821137",
+		"_collection_link": "https://abid-arham-3487120.postman.co/workspace/Abid-Arham's-Workspace~eaaa8173-a2bd-4678-81a3-0b18bdc5ac69/collection/54821137-8f6d1e61-15ac-4f62-99d7-e02dd676ecbe?action=share&source=collection_link&creator=54821137"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create new user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"user9\",\n    \"email\": \"user9@gmail.com\",\n    \"password\": 12345678,\n    \"role\":\"TECHNICIAN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user8@gmail.com\",\n    \"password\": 12345678\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/auth/me",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Services and Technicians",
+			"item": [
+				{
+					"name": "Get All categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/categories",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all technicians",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/technicians",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"technicians"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/services",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get technician by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/technicians/8c799db3-f6d4-48c2-a0ab-18b3f3922178",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"technicians",
+								"8c799db3-f6d4-48c2-a0ab-18b3f3922178"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Create new booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n  \"customerId\": \"ae7edca9-d804-40ae-9bf6-9794687296c3\",\n  \"technicianId\": \"806920d9-7906-4bb4-9469-beed9b03c9eb\",\n  \"serviceId\": \"cfb1cfe5-add6-4ced-b979-00645cf7cea8\",\n  \"scheduledAt\": \"2026-08-10T14:00:00Z\",\n  \"location\": \"Banani, Dhaka\",\n  \"totalAmount\": 200.00,\n  \"notes\": \"Please call 10 min before arriving\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/bookings",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/bookings",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get bookings by bookingId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/bookings/cb6d9608-a846-4d70-8460-cb9b17c67add",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bookings",
+								"cb6d9608-a846-4d70-8460-cb9b17c67add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Technician Management",
+			"item": [
+				{
+					"name": "Update technician profile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"skills\":[\"Plumbing\"],\n    \"experience\":1,\n    \"hourlyRate\":20.00,\n    \"location\":\"Mohakhali\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/technicians/profile",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"technicians",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update availability",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"days\":[\"Sunday\", \"Tuesday\",\"Thursday\"],\n    \"hours\":\"10.00-14.00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/technicians/availability",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"technicians",
+								"availability"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get technician bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/technicians/bookings",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"technicians",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update booking status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/technicians/bookings/e80a3624-22b9-4735-9429-9ba98ddf0e32",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"technicians",
+								"bookings",
+								"e80a3624-22b9-4735-9429-9ba98ddf0e32"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "Create new review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"customerId\":\"ae7edca9-d804-40ae-9bf6-9794687296c3\",\n            \"technicianId\":\"4d24d1ab-ad32-487f-ae59-cbea6a5504fc\",\n            \"bookingId\":\"\",\n            \"rating\":\"\",\n            \"comment\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/reviews",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "create payment",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm payment",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get user payment",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get payment details",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
 }

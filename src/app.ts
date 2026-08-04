@@ -12,6 +12,8 @@ import { technicianRouter } from "./modules/technicians/technician.routes";
 import { serviceRouter } from "./modules/services/service.routes";
 import { bookingRouter } from "./modules/bookings/booking.routes";
 import { reviewRouter } from "./modules/reviews/review.routes";
+import { paymentRouter } from "./modules/payments/payment.routes";
+
 const app: Application = express();
 
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
@@ -30,6 +32,7 @@ app.use("/api/technicians", technicianRouter)
 app.use("/api/services", serviceRouter)
 app.use("/api/bookings", bookingRouter)
 app.use("/api/reviews", reviewRouter)
+app.use("/api/payments", paymentRouter)
 
 
 

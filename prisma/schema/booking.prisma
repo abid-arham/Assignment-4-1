@@ -1,22 +1,20 @@
 model Booking {
   id           String            @id @default(uuid())
   customerId   String
-  customer     User              @relation("CustomerBookings", fields: [customerId], references: [id], onDelete: Restrict)
   technicianId String
-  technician   TechnicianProfile @relation(fields: [technicianId], references: [id], onDelete: Restrict)
   serviceId    String
-  service      Service           @relation(fields: [serviceId], references: [id], onDelete: Restrict)
   scheduledAt  DateTime
   location     String
   notes        String?
   totalAmount  Decimal           @db.Decimal(10, 2)
   status       BookingStatus     @default(REQUESTED)
-
-  payments Payment[]
-  review   Review?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  customer     User              @relation("CustomerBookings", fields: [customerId], references: [id])
+  service      Service           @relation(fields: [serviceId], references: [id])
+  technician   TechnicianProfile @relation(fields: [technicianId], references: [id])
+  payments     Payment[]
+  review       Review?
 
   @@index([customerId])
   @@index([technicianId])

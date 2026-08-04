@@ -1,0 +1,4 @@
+enum PaymentProvider {
+  STRIPE
+  SSLCOMMERZ
+}
