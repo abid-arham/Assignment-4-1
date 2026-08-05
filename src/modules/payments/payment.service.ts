@@ -25,8 +25,8 @@ const createCheckoutSession = async (userId: string, bookingId: string) => {
       quantity: 1
     }],
     mode: "payment",
-    success_url: `${config.app_url}/bookings/${bookingId}?payment=success`,
-    cancel_url: `${config.app_url}/bookings/${bookingId}?payment=cancel`,
+    success_url: `${config.app_url}/api/payments/success`,
+    cancel_url: `${config.app_url}/api/payments/cancel`,
     metadata: { bookingId, userId }
   })
 
