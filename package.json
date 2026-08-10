@@ -2,6 +2,7 @@
   "name": "fix-it-now-api",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "Backend API scaffold for the FixItNow home-services marketplace.",
   "main": "dist/src/server.js",
   "scripts": {
