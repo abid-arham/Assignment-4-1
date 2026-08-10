@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { authController } from "./auth.controller.js";
-import { auth } from "../../middlewares/auth";
+import { auth } from "../../middlewares/auth.js";
 import { Role } from "@prisma/client";
-import { validate } from "../../middlewares/validate";
+import { validate } from "../../middlewares/validate.js";
 import { authValidation } from "./auth.validation.js";
 
 const router = Router();

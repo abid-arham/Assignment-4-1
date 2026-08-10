@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
-import { catchAsync } from "../../utils/catchAsync"
+import { catchAsync } from "../../utils/catchAsync.js"
 import { paymentServices } from "./payment.service.js"
-import { sendResponse } from "../../utils/sendResponse"
+import { sendResponse } from "../../utils/sendResponse.js"
 
 const createCheckoutSession = catchAsync(async (req: Request, res: Response) => {
   const { bookingId } = req.body

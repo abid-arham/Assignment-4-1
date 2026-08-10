@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { catchAsync } from "../../utils/catchAsync";
+import { catchAsync } from "../../utils/catchAsync.js";
 import { technicianService } from "./technician.service.js";
-import { sendResponse } from "../../utils/sendResponse";
+import { sendResponse } from "../../utils/sendResponse.js";
 import httpStatus from "http-status"
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 const getAllTechnicians = catchAsync(async(req:Request, res: Response, next: NextFunction)=>{
     const result = await technicianService.getAllTechnicians()
     sendResponse(res, {

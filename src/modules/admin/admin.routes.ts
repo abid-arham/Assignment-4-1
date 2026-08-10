@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { auth } from "../../middlewares/auth";
+import { auth } from "../../middlewares/auth.js";
 import { Role } from "@prisma/client";
 import { adminController } from "./admin.controller.js";
-import { validate } from "../../middlewares/validate";
+import { validate } from "../../middlewares/validate.js";
 import { adminValidation } from "./admin.validation.js";
-import { categoryValidation } from "../categories/category.validation";
+import { categoryValidation } from "../categories/category.validation.js";
 
 const router = Router();
 

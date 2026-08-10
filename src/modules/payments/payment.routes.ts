@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { auth } from "../../middlewares/auth"
+import { auth } from "../../middlewares/auth.js"
 import { paymentController } from "./payment.controller.js"
 
 const router = Router()

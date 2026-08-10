@@ -1,5 +1,5 @@
 import { BookingStatus } from "@prisma/client";
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 import { IUpdateAvailabilitySlots, IUpdateTechnicianProfile } from "./technician.interface.js";
 
 const getAllTechnicians = async()=>{

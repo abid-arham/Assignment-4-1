@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express"
-import { catchAsync } from "../../utils/catchAsync"
+import { catchAsync } from "../../utils/catchAsync.js"
 import { authServices } from "./auth.service.js";
-import { sendResponse } from "../../utils/sendResponse";
+import { sendResponse } from "../../utils/sendResponse.js";
 
 import httpStatus from "http-status"
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 
 
 
