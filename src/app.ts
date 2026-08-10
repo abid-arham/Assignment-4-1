@@ -2,7 +2,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
 
-import apiRouter from "./modules.js";
+import apiRouter from "./modules/index.js";
 import { notFound } from "./middlewares/notFound.js";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
