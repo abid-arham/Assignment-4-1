@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { BookingStatus } from "../../../generated/prisma/enums"
+import { BookingStatus } from "@prisma/client"
 
 const create = z.object({
   body: z.object({

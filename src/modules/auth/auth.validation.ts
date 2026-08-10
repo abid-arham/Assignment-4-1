@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { Role } from "../../../generated/prisma/enums"
+import { Role } from "@prisma/client"
 
 const register = z.object({
   body: z.object({

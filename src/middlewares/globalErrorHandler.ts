@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import httpStatus from "http-status"
-import { Prisma } from "../../generated/prisma/client"
+import { Prisma } from "@prisma/client"
 import { ZodError } from "zod"
 
 export const globalErrorHandler = (err: Error, _req: Request, res: Response, _next: NextFunction) => {

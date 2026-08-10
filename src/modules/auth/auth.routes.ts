@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authController } from "./auth.controller.js";
 import { auth } from "../../middlewares/auth";
-import { Role } from "../../../generated/prisma/enums";
+import { Role } from "@prisma/client";
 import { validate } from "../../middlewares/validate";
 import { authValidation } from "./auth.validation.js";
 

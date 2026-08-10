@@ -1,4 +1,4 @@
-import { BookingStatus } from "../../../generated/prisma/enums";
+import { BookingStatus } from "@prisma/client";
 
 
 export interface ICreateReview{

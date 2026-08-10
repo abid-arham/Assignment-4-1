@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { bookingController } from "./booking.controller.js";
 import { auth } from "../../middlewares/auth";
-import { Role } from "../../../generated/prisma/enums";
+import { Role } from "@prisma/client";
 import { validate } from "../../middlewares/validate";
 import { bookingValidation } from "./booking.validation.js";
 

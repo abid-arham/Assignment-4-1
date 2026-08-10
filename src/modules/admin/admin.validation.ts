@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { ActiveStatus } from "../../../generated/prisma/enums"
+import { ActiveStatus } from "@prisma/client"
 
 const updateUserStatus = z.object({
   body: z.object({

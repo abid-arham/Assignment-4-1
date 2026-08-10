@@ -1,5 +1,5 @@
 
-import { ActiveStatus } from "../../../generated/prisma/enums"
+import { ActiveStatus } from "@prisma/client"
 import { prisma } from "../../lib/prisma"
 
 const getAllUsers = async()=>{
