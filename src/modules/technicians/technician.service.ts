@@ -1,6 +1,6 @@
 import { BookingStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
-import { IUpdateAvailabilitySlots, IUpdateTechnicianProfile } from "./technician.interface";
+import { IUpdateAvailabilitySlots, IUpdateTechnicianProfile } from "./technician.interface.js";
 
 const getAllTechnicians = async()=>{
     const technicians = await prisma.technicianProfile.findMany()

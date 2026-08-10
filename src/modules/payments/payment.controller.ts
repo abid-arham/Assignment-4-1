@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { catchAsync } from "../../utils/catchAsync"
-import { paymentServices } from "./payment.service"
+import { paymentServices } from "./payment.service.js"
 import { sendResponse } from "../../utils/sendResponse"
 
 const createCheckoutSession = catchAsync(async (req: Request, res: Response) => {

@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma"
-import { ICreateReview } from "./review.interface"
+import { ICreateReview } from "./review.interface.js"
 
 
 

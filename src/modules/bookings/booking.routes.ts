@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { bookingController } from "./booking.controller";
+import { bookingController } from "./booking.controller.js";
 import { auth } from "../../middlewares/auth";
 import { Role } from "../../../generated/prisma/enums";
 import { validate } from "../../middlewares/validate";
-import { bookingValidation } from "./booking.validation";
+import { bookingValidation } from "./booking.validation.js";
 
 const router = Router();
 

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
-import { reviewServices } from "./review.service";
+import { reviewServices } from "./review.service.js";
 import { sendResponse } from "../../utils/sendResponse";
 
 import httpStatus from "http-status"

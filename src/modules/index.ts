@@ -1,13 +1,13 @@
 import { Router } from "express";
 
-import {adminRouter} from "./admin/admin.routes";
-import { authRouter } from "./auth/auth.routes";
-import { bookingRouter } from "./bookings/booking.routes";
-import { categoryRouter } from "./categories/category.routes";
-import { paymentRouter } from "./payments/payment.routes";
-import { reviewRouter } from "./reviews/review.routes";
-import { serviceRouter } from "./services/service.routes";
-import { technicianRouter } from "./technicians/technician.routes";
+import {adminRouter} from "./admin/admin.routes.js";
+import { authRouter } from "./auth/auth.routes.js";
+import { bookingRouter } from "./bookings/booking.routes.js";
+import { categoryRouter } from "./categories/category.routes.js";
+import { paymentRouter } from "./payments/payment.routes.js";
+import { reviewRouter } from "./reviews/review.routes.js";
+import { serviceRouter } from "./services/service.routes.js";
+import { technicianRouter } from "./technicians/technician.routes.js";
 
 
 const router = Router();
