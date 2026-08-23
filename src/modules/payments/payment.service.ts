@@ -1,6 +1,6 @@
 import { prisma } from "../../lib/prisma.js"
 import { stripe } from "../../lib/stripe.js"
-import config from "../../config.js"
+import config from "../../config/index.js"
 import Stripe from "stripe"
 
 const createCheckoutSession = async (userId: string, bookingId: string) => {

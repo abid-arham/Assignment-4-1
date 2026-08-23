@@ -1,5 +1,5 @@
 import { tr } from "zod/v4/locales";
-import config from "../../config.js";
+import config from "../../config/index.js";
 import { prisma } from "../../lib/prisma.js"
 import bcrypt from "bcryptjs";
 import { ICreateUser, ILoginUser } from "./auth.interface.js";

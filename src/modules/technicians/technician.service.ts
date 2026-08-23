@@ -2,21 +2,27 @@ import { BookingStatus } from "@prisma/client";
 import { prisma } from "../../lib/prisma.js";
 import { IUpdateAvailabilitySlots, IUpdateTechnicianProfile } from "./technician.interface.js";
 
-const getAllTechnicians = async()=>{
-    const technicians = await prisma.technicianProfile.findMany()
+const getAllTechnicians = async () => {
+    const technicians = await prisma.technicianProfile.findMany({
+        include: {
+            user: {
+                select: { id: true, name: true, email: true }
+            }
+        }
+    })
     return technicians
 }
 
-const getTechnicianById = async(technicianId: string)=>{
+const getTechnicianById = async (technicianId: string) => {
     const technician = await prisma.technicianProfile.findUniqueOrThrow({
-        where:{
-            id: technicianId
-        },
-        include:{
-            reviews: true
+        where: { id: technicianId },
+        include: {
+            reviews: true,
+            user: {
+                select: { id: true, name: true, email: true }
+            }
         }
     })
-
     return technician
 }
 

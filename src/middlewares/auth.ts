@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { catchAsync } from "../utils/catchAsync.js";
 import { jwtUtils } from "../utils/jwt.js";
-import config from "../config.js";
+import config from "../config/index.js";
 import { JwtPayload } from "jsonwebtoken";
 import { prisma } from "../lib/prisma.js";
 import { Role } from "@prisma/client";
