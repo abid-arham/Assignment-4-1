@@ -46,45 +46,40 @@ const registerUser = async(payload: ICreateUser)=>{
     return createdUser
     
 }
-
-const loginUser = async(payload: ILoginUser)=>{
-    const {email, password} = payload;
-    if(!email || password === undefined || password === null){
+const loginUser = async (payload: ILoginUser) => {
+    const { email, password } = payload
+    if (!email || password === undefined || password === null) {
         throw new Error("Email and password are required")
     }
 
-    const user = await prisma.user.findUniqueOrThrow({
-        where:{
-            email
-        }
-    })
-
-    const isPasswordMatched = await bcrypt.compare(String(password), user.password);
-
-    if(!isPasswordMatched){
+    const user = await prisma.user.findUniqueOrThrow({ where: { email } })
+    const isPasswordMatched = await bcrypt.compare(String(password), user.password)
+    if (!isPasswordMatched) {
         throw new Error("Incorrect email or password")
     }
 
-    const {password: _password, ...userWithoutPassword} = user;
+    let technicianId: string | undefined
+    if (user.role === "TECHNICIAN") {
+        const technicianProfile = await prisma.technicianProfile.findUnique({
+            where: { userId: user.id },
+            select: { id: true },
+        })
+        technicianId = technicianProfile?.id
+    }
 
     const jwtPayload = {
         id: user.id,
         name: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        ...(technicianId && { technicianId }),
     }
 
-    const accessToken = jwtUtils.createToken(jwtPayload,
-    config.jwt_access_secret, 
-    {expiresIn:config.jwt_access_expires_in} as SignOptions)
+    const accessToken = jwtUtils.createToken(jwtPayload, config.jwt_access_secret, { expiresIn: config.jwt_access_expires_in } as SignOptions)
+    const refreshToken = jwtUtils.createToken(jwtPayload, config.jwt_refresh_secret, { expiresIn: config.jwt_refresh_expires_in } as SignOptions)
 
-    const refreshToken = jwtUtils.createToken(jwtPayload,
-    config.jwt_refresh_secret, 
-    {expiresIn:config.jwt_refresh_expires_in} as SignOptions)
-
-    return {accessToken, refreshToken};
+    return { accessToken, refreshToken }
 }
-
 
 const getUserInfo = async(userId: string)=>{
     
