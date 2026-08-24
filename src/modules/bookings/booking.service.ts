@@ -43,11 +43,31 @@ const getBookingByBookingId = async(bookingId: string)=>{
 
 }
 
+const cancelBooking = async (bookingId: string, customerId: string) => {
+  const booking = await prisma.booking.findUniqueOrThrow({
+    where: { id: bookingId },
+  })
+
+  if (booking.customerId !== customerId) {
+    throw new Error("Not your booking")
+  }
+
+  if (booking.status !== "REQUESTED") {
+    throw new Error("Only requested bookings can be cancelled")
+  }
+
+  const cancelledBooking = await prisma.booking.update({
+    where: { id: bookingId },
+    data: { status: "CANCELLED" },
+  })
+
+  return cancelledBooking
+}
+
+export const bookingServices = {
+  createBooking, getAllBookings, getBookingByBookingId, cancelBooking
+}
 
 
 
 
-
-export const bookingServices =  {
-    createBooking, getAllBookings, getBookingByBookingId
-};

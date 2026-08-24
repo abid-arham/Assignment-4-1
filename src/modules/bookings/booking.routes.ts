@@ -12,4 +12,6 @@ router.get("/", auth(Role.CUSTOMER, Role.ADMIN), bookingController.getAllBooking
 
 router.get("/:id", auth(Role.CUSTOMER), bookingController.getBookingByBookingId)
 
+router.patch("/:id/cancel", auth(Role.CUSTOMER), bookingController.cancelBooking)
+
 export const bookingRouter = router;
