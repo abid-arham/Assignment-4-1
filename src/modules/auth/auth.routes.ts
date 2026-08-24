@@ -10,5 +10,6 @@ const router = Router();
 router.post("/register", validate(authValidation.register), authController.registerUser)
 router.post("/login", validate(authValidation.login), authController.loginUser)
 router.get("/me", auth(Role.ADMIN, Role.CUSTOMER, Role.TECHNICIAN), authController.getUserInfo)
-
+router.patch("/me", auth(Role.ADMIN, Role.CUSTOMER, Role.TECHNICIAN), validate(authValidation.updateProfile), authController.updateProfile)
+router.patch("/me/password", auth(Role.ADMIN, Role.CUSTOMER, Role.TECHNICIAN), validate(authValidation.changePassword), authController.changePassword)
 export const authRouter = router;

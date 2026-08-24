@@ -14,3 +14,11 @@ export interface ICreateUser{
     role: Role
 }
 
+export interface IUpdateProfile {
+  name: string;
+}
+
+export interface IChangePassword {
+  currentPassword: string;
+  newPassword: string;
+}

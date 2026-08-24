@@ -55,16 +55,28 @@ const getUserInfo = catchAsync(async(req: Request, res: Response, next:NextFunct
 })
 
 
+const updateProfile = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user?.id
+  const result = await authServices.updateProfile(userId as string, req.body)
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Profile updated successfully",
+    data: result
+  })
+})
 
-
-
-
-
-
-
-
-
+const changePassword = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user?.id
+  const result = await authServices.changePassword(userId as string, req.body)
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Password changed successfully",
+    data: result
+  })
+})
 
 export const authController = {
-    registerUser, loginUser, getUserInfo
+  registerUser, loginUser, getUserInfo, updateProfile, changePassword
 }

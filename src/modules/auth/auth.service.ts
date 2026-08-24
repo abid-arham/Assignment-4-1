@@ -101,11 +101,36 @@ const getUserInfo = async(userId: string)=>{
 
 
 }
+const updateProfile = async (userId: string, payload: { name: string }) => {
+  const updatedUser = await prisma.user.update({
+    where: { id: userId },
+    data: { name: payload.name },
+    omit: { password: true },
+  })
+  return updatedUser
+}
 
+const changePassword = async (
+  userId: string,
+  payload: { currentPassword: string; newPassword: string }
+) => {
+  const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } })
 
+  const isMatch = await bcrypt.compare(payload.currentPassword, user.password)
+  if (!isMatch) {
+    throw new Error("Current password is incorrect")
+  }
 
+  const hashedPassword = await bcrypt.hash(payload.newPassword, Number(config.bcrypt_salt_rounds))
 
+  await prisma.user.update({
+    where: { id: userId },
+    data: { password: hashedPassword },
+  })
+
+  return { success: true }
+}
 
 export const authServices = {
-    registerUser, loginUser, getUserInfo
+  registerUser, loginUser, getUserInfo, updateProfile, changePassword
 }
