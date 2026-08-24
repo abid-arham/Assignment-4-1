@@ -103,7 +103,27 @@ const updateBookingStatus = async(bookingId: string, newStatus: BookingStatus)=>
     
 
 }
+const getMyTechnicianProfile = async (
+  technicianId: string
+) => {
+  const technician =
+    await prisma.technicianProfile.findUniqueOrThrow({
+      where: {
+        id: technicianId,
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    })
 
+  return technician
+}
 
 
 export const technicianService = {
@@ -113,4 +133,5 @@ export const technicianService = {
     updateTechnicianAvailability,
     getTechnicianBookings,
     updateBookingStatus,
+    getMyTechnicianProfile
 };
