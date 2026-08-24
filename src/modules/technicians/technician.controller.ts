@@ -4,6 +4,7 @@ import { technicianService } from "./technician.service.js";
 import { sendResponse } from "../../utils/sendResponse.js";
 import httpStatus from "http-status"
 import { prisma } from "../../lib/prisma.js";
+
 const getAllTechnicians = catchAsync(async(req:Request, res: Response, next: NextFunction)=>{
     const result = await technicianService.getAllTechnicians()
     sendResponse(res, {
@@ -97,9 +98,27 @@ const getMyTechnicianProfile = catchAsync(
   }
 )
 
+const getTechnicianAvailableSlots = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const technicianId = req.params.id
+    const { date, serviceId } = req.query
 
+    const result = await technicianService.getTechnicianAvailableSlots(
+      technicianId as string,
+      {
+        date: date as string,
+        serviceId: serviceId as string | undefined,
+      }
+    )
 
-
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Technician availability slots retrieved successfully",
+      data: result,
+    })
+  }
+)
 
 export const technicianController =  {
     getAllTechnicians, getTechnicianById,
@@ -107,5 +126,6 @@ export const technicianController =  {
     updateTechnicianAvailability,
     getTechnicianBookings,
     updateBookingStatus,
-    getMyTechnicianProfile
+    getMyTechnicianProfile,
+    getTechnicianAvailableSlots,
 };
