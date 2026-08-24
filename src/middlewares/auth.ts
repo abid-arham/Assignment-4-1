@@ -41,7 +41,7 @@ export const auth = (...requiredRoles: Role[]) =>{
     const {email, id, name, role} = verifiedToken.data as JwtPayload
     const user = await prisma.user.findUnique({
         where:{
-            id, email, name, role
+            id
         },
         include: { technicianProfile: role === Role.TECHNICIAN }
     });
@@ -66,7 +66,7 @@ export const auth = (...requiredRoles: Role[]) =>{
 
 
     req.user = {
-        email, name, id, role,
+        email: user.email, name: user.name, id: user.id, role: user.role,
         technicianId: user.technicianProfile?.id
     }
 
@@ -74,5 +74,3 @@ export const auth = (...requiredRoles: Role[]) =>{
     })
 
 }
-
-
