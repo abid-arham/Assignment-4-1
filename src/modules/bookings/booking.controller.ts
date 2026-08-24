@@ -8,11 +8,14 @@ import httpStatus from "http-status"
 
 
 
-
-
 const createBooking = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
-    
-    const payload = req.body
+    const customerId = req.user?.id
+
+    const payload = {
+        ...req.body,
+        customerId,
+    }
+
     const result = await bookingServices.createBooking(payload)
     sendResponse(res, {
         success: true,
@@ -20,7 +23,6 @@ const createBooking = catchAsync(async(req:Request, res:Response, next:NextFunct
         message: "New Booking created",
         data: result
     })
-
 })
 
 const getAllBookings = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
