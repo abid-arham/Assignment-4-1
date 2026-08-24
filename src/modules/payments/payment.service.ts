@@ -20,13 +20,13 @@ const createCheckoutSession = async (userId: string, bookingId: string) => {
       price_data: {
         currency: "usd",
         product_data: { name: booking.service.title },
-        unit_amount: Math.round(booking.service.price.toNumber() * 100)
+        unit_amount: Math.round(booking.totalAmount.toNumber() * 100)  
       },
       quantity: 1
     }],
     mode: "payment",
-    success_url: `${config.app_url}/api/payments/success`,
-    cancel_url: `${config.app_url}/api/payments/cancel`,
+    success_url: `${config.frontend_url}/dashboard/bookings?payment=success`,
+    cancel_url: `${config.frontend_url}/dashboard/bookings?payment=cancelled`,
     metadata: { bookingId, userId }
   })
 

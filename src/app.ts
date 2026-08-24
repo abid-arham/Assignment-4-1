@@ -14,10 +14,12 @@ import { bookingRouter } from "./modules/bookings/booking.routes.js";
 import { reviewRouter } from "./modules/reviews/review.routes.js";
 import { paymentRouter } from "./modules/payments/payment.routes.js";
 import { adminRouter } from "./modules/admin/admin.routes.js";
+import { paymentController } from "./modules/payments/payment.controller.js";
 
 const app: Application = express();
 
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.post("/api/payments/confirm", express.raw({ type: "application/json" }), paymentController.handleWebhook);
 app.use(express.json());
 app.use(cookieParser());
 
