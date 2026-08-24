@@ -16,7 +16,11 @@ router.get("/:id", technicianController.getTechnicianById)
 router.put("/profile", auth(Role.TECHNICIAN), technicianController.updateTechnicianProfile)
 router.put("/availability",auth(Role.TECHNICIAN), technicianController.updateTechnicianAvailability)
 
-
+router.get(
+  "/profile",
+  auth(Role.TECHNICIAN),
+  technicianController.getMyTechnicianProfile
+)
 
 
 export const technicianRouter = router;
