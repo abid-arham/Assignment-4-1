@@ -17,9 +17,10 @@ router.get(
   auth(Role.TECHNICIAN),
   technicianController.getMyTechnicianProfile
 )
-router.get("/:id", technicianController.getTechnicianById)
 router.put("/profile", auth(Role.TECHNICIAN), technicianController.updateTechnicianProfile)
 router.put("/availability",auth(Role.TECHNICIAN), technicianController.updateTechnicianAvailability)
+router.get("/:id", technicianController.getTechnicianById)
+
 
 
 

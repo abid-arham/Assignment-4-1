@@ -76,30 +76,26 @@ const updateBookingStatus = catchAsync(async(req: Request, res: Response, next: 
     })
 })
 const getMyTechnicianProfile = catchAsync(
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    const technicianId =
-      req.user?.technicianId
+  async (req: Request, res: Response) => {
+    const technicianId = req.user?.technicianId
 
-    const result =
+    if (!technicianId) {
+      throw new Error("Technician ID not found")
+    }
+
+    const technician =
       await technicianService.getMyTechnicianProfile(
-        technicianId as string
+        technicianId
       )
 
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
-      message:
-        "Technician profile retrieved successfully",
-      data: result,
+      message: "Technician profile retrieved successfully",
+      data: technician,
     })
   }
 )
-
-
 
 
 
